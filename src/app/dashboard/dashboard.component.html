@@ -1,0 +1,18 @@
+<div *ngIf="authFacade.getAuthStatus() | async; else unauthorized">
+  <div class="content-containers">
+    <app-list class="content-list"
+              [contentList]="contentFacade.getContentList() | async"
+              (onContentSelected)="contentFacade.goToContent($event)"
+              (onContentDelete)="contentFacade.deleteContent($event)">
+    </app-list>
+    <app-detail class="content-details"
+                [selectedContent]="contentFacade.getSelectedContent() | async"
+                (onContentSave)="contentFacade.updateContent($event)"
+                (onCancel)="contentFacade.resetContent()">
+    </app-detail>
+  </div>
+</div>
+<!--Should never reach here due to the route guard-->
+<ng-template #unauthorized>
+  <app-unauthorized></app-unauthorized>
+</ng-template>
